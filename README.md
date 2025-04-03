@@ -1,11 +1,7 @@
-<p >
-<a href="https://www.buymeacoffee.com/abhayrawat" target="_blank"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="30px" width= "108px"></a>
-</p> 
-
 # ffmpeg_helper
 FFmpeg commands helper for flutter with support for setup on windows platform.
 Create thumbnail and run ffprobe on all platforms except WEB.
-This uses ffmpeg_kit_flutter_min_gpl package for android/ios/macos
+This uses ffmpeg_kit_flutter package for android/ios/macos
 Info was taken from ffmpeg_cli and recreated it as that project was stale.
 ```dart
 // Initialize in main
