@@ -151,7 +151,7 @@ class FFMpegHelper {
     return FFMpegHelperSession(
       nonWindowSession: sess,
       cancelSession: () async {
-        await sess.cancel();
+        sess.cancel();
       },
     );
   }
@@ -190,21 +190,28 @@ class FFMpegHelper {
       }
       if (temp.isNotEmpty) {
         try {
-          statisticsCallback?.call(Statistics(
-            process.pid,
-            int.tryParse(temp['frame']) ?? 0,
-            double.tryParse(temp['fps']) ?? 0.0,
-            double.tryParse(temp['stream_0_0_q']) ?? 0.0,
-            int.tryParse(temp['total_size']) ?? 0,
-            int.tryParse(temp['out_time_us']) ?? 0,
-            // 2189.6kbits/s => 2189.6
-            double.tryParse(
-                    temp['bitrate']?.replaceAll(RegExp('[a-z/]'), '')) ??
-                0.0,
-            // 2.15x => 2.15
-            double.tryParse(temp['speed']?.replaceAll(RegExp('[a-z/]'), '')) ??
-                0.0,
-          ));
+          statisticsCallback?.call(
+            Statistics(
+              process.pid,
+              int.tryParse(temp['frame']) ?? 0,
+              double.tryParse(temp['fps']) ?? 0.0,
+              double.tryParse(temp['stream_0_0_q']) ?? 0.0,
+              int.tryParse(temp['total_size']) ?? 0,
+              //int.parse(
+              //temp['out_time_us'].toString(),
+              double.parse(temp['out_time_us'].toString()),
+              // 2189.6kbits/s => 2189.6
+              double.tryParse(
+                    temp['bitrate']?.replaceAll(RegExp('[a-z/]'), ''),
+                  ) ??
+                  0.0,
+              // 2.15x => 2.15
+              double.tryParse(
+                    temp['speed']?.replaceAll(RegExp('[a-z/]'), ''),
+                  ) ??
+                  0.0,
+            ),
+          );
         } catch (e) {
           if (kDebugMode) {
             print(e);
