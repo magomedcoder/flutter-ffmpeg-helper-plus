@@ -10,8 +10,4 @@ class FFMpegProgress {
   });
 }
 
-enum FFMpegProgressPhase {
-  downloading,
-  decompressing,
-  inactive,
-}
+enum FFMpegProgressPhase { downloading, decompressing, inactive }

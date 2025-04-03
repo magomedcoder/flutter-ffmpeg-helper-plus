@@ -6,9 +6,7 @@ import 'ffmpeg_filter_chain.dart';
 /// FFMPEG filter graph syntax reference:
 /// http://ffmpeg.org/ffmpeg-filters.html#Filtergraph-syntax-1
 class FilterGraph {
-  const FilterGraph({
-    required this.chains,
-  });
+  const FilterGraph({required this.chains});
 
   final List<FilterChain> chains;
 

@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_arguments_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_arguments_abstract.dart';
 
 class PresetArgument implements CliArguments {
   /// A preset is a collection of options that will provide a certain encoding speed to compression ratio.
@@ -11,6 +11,7 @@ class PresetArgument implements CliArguments {
   ///
   /// ultrafast,superfast,veryfast,faster,fast,medium (default preset),slow,slower,veryslow
   final EncodingPresets preset;
+
   const PresetArgument(this.preset);
 
   @override
@@ -28,5 +29,5 @@ enum EncodingPresets {
   medium,
   slow,
   slower,
-  veryslow
+  veryslow,
 }

@@ -9,11 +9,11 @@
 /// outputs from one filter chain are used as inputs in another filter
 /// chain. To that end, these streams are represented by this class.
 class FFMpegStream {
-  const FFMpegStream({
-    this.videoId,
-    this.audioId,
-  }) : assert(videoId != null || audioId != null,
-            "FFMpegStream must include a videoId, or an audioId.");
+  const FFMpegStream({this.videoId, this.audioId})
+    : assert(
+        videoId != null || audioId != null,
+        "FFMpegStream must include a videoId, or an audioId.",
+      );
 
   /// Handle to a video stream, e.g., "[0:v]".
   final String? videoId;

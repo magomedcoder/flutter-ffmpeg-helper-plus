@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_filter_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_filter_abstract.dart';
 
 class ScaleFilter implements Filter {
   /// User can now set [width] [height] to nevative values.

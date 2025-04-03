@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_arguments_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_arguments_abstract.dart';
 
 /// Audio bitrate in kbps , eg: 1000kbps
 class SeekArgument implements CliArguments {

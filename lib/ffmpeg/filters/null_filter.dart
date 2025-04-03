@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_filter_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_filter_abstract.dart';
 
 /// Routes the input video stream to the output video stream
 /// without any modifications.

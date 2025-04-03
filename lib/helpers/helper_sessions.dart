@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:ffmpeg_kit_flutter_min_gpl/ffmpeg_session.dart';
+
+import 'package:ffmpeg_kit_flutter/ffmpeg_session.dart';
 
 class FFMpegHelperSession {
   final Function cancelSession;

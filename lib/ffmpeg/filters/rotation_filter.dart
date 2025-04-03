@@ -1,12 +1,10 @@
-import '../../abstract_classes/ffmpeg_filter_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_filter_abstract.dart';
 
 /// Add rotataion to the filter.
 class RotationFilter implements Filter {
   final int degrees;
 
-  const RotationFilter({
-    required this.degrees,
-  });
+  const RotationFilter({required this.degrees});
 
   @override
   String toCli() {

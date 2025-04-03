@@ -9,7 +9,7 @@ class FFMpegInput {
   ///
   /// See the FFMPEG docs for more information.
   FFMpegInput.virtualDevice(String device)
-      : args = ['-f', 'lavfi', '-i', device];
+    : args = ['-f', 'lavfi', '-i', device];
 
   const FFMpegInput(this.args);
 

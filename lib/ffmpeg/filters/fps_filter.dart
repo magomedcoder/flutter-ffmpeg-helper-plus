@@ -1,18 +1,15 @@
-import 'package:ffmpeg_helper/ffmpeg_helper.dart';
+import 'package:ffmpeg_helper_plus/ffmpeg_helper_plus.dart';
 
 /// Converts the input video stream to the specified constant frame rate
 /// by duplicating or dropping frames as necessary.
 class FpsFilter implements Filter {
-  FpsFilter({
-    required this.fps,
-    this.startTime,
-    this.round,
-    this.eofAction,
-  })  : assert(fps > 0),
-        assert(round == null ||
-            const ['zero', 'inf', 'down', 'up', 'near'].contains(round)),
-        assert(
-            eofAction == null || const ['round', 'pass'].contains(eofAction));
+  FpsFilter({required this.fps, this.startTime, this.round, this.eofAction})
+    : assert(fps > 0),
+      assert(
+        round == null ||
+            const ['zero', 'inf', 'down', 'up', 'near'].contains(round),
+      ),
+      assert(eofAction == null || const ['round', 'pass'].contains(eofAction));
 
   final int fps;
   final Duration? startTime;

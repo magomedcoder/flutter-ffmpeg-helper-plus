@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_arguments_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_arguments_abstract.dart';
 
 class RemoveAudioArgument implements CliArguments {
   /// Remove audio track

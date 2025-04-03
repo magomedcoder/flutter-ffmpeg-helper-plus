@@ -20,7 +20,7 @@ Duration parseStandardDuration(String durationString) {
     throw Exception('Duration string must be non-empty: $durationString');
   }
 
-// Process and remove a negative sign, if it exists.
+  // Process and remove a negative sign, if it exists.
   bool isNegative = durationString[0] == '-';
   if (isNegative) {
     durationString = durationString.substring(1);
@@ -29,8 +29,9 @@ Duration parseStandardDuration(String durationString) {
   final timeComponents = durationString.split(':');
   final secondsWithFraction = timeComponents.removeLast();
   final seconds = double.parse(secondsWithFraction).truncate();
-  final microseconds = ((double.parse(secondsWithFraction) - seconds) * _microsPerSecond)
-      .truncate(); // truncate shouldn't change anything. we just need an int.
+  final microseconds =
+      ((double.parse(secondsWithFraction) - seconds) * _microsPerSecond)
+          .truncate(); // truncate shouldn't change anything. we just need an int.
   String minutes = '';
   String hours = '';
   if (timeComponents.isNotEmpty) {
@@ -40,7 +41,9 @@ Duration parseStandardDuration(String durationString) {
     hours = timeComponents.removeLast();
   }
   if (timeComponents.isNotEmpty) {
-    throw Exception('A standard format duration cannot have any time components beyond hours: "$durationString"');
+    throw Exception(
+      'A standard format duration cannot have any time components beyond hours: "$durationString"',
+    );
   }
 
   final signMultiplier = isNegative ? -1 : 1;
@@ -75,13 +78,16 @@ Duration parseUnitSpecificDuration(String unitSpecificDuration) {
   } else if (durationString.endsWith('us')) {
     durationString = durationString.substring(0, durationString.length - 2);
     wholeValueMicroMultiplier = 1;
-    fractionValueMicroMultiplier = 0; // there should never a microsecond fraction.
+    fractionValueMicroMultiplier =
+        0; // there should never a microsecond fraction.
   } else if (durationString.endsWith('s')) {
     durationString = durationString.substring(0, durationString.length - 1);
     wholeValueMicroMultiplier = _microsPerSecond;
     fractionValueMicroMultiplier = _microsPerMillisecond;
   } else {
-    throw Exception('Unit-specific durations must specify the time unit: "$unitSpecificDuration"');
+    throw Exception(
+      'Unit-specific durations must specify the time unit: "$unitSpecificDuration"',
+    );
   }
 
   final timeComponents = durationString.split('+');
@@ -90,7 +96,9 @@ Duration parseUnitSpecificDuration(String unitSpecificDuration) {
     fractionalValue = 0;
   } else if (timeComponents.length == 2) {
     wholeValue = int.parse(timeComponents[0]);
-    fractionalValue = int.parse(timeComponents[1].substring(1)); // Remove leading '.' from fraction
+    fractionalValue = int.parse(
+      timeComponents[1].substring(1),
+    ); // Remove leading '.' from fraction
   } else {
     throw Exception('Invalid unit-specific duration: "$unitSpecificDuration');
   }
@@ -98,7 +106,9 @@ Duration parseUnitSpecificDuration(String unitSpecificDuration) {
   final signMultiplier = isNegative ? -1 : 1;
   return Duration(
     microseconds:
-        ((wholeValue * wholeValueMicroMultiplier) + (fractionalValue * fractionValueMicroMultiplier)) * signMultiplier,
+        ((wholeValue * wholeValueMicroMultiplier) +
+            (fractionalValue * fractionValueMicroMultiplier)) *
+        signMultiplier,
   );
 }
 
@@ -108,9 +118,12 @@ extension FfmpegDuration on Duration {
     final minutes = inMinutes.abs() - (hours * 60);
     final seconds = inSeconds.abs() - (minutes * 60) - (hours * 60 * 60);
     final fraction =
-        (inMicroseconds.abs() - (seconds * _microsPerSecond) - (minutes * _microsPerMinute) - (hours * _microsPerHour))
-                .toDouble() /
-            _microsPerSecond;
+        (inMicroseconds.abs() -
+                (seconds * _microsPerSecond) -
+                (minutes * _microsPerMinute) -
+                (hours * _microsPerHour))
+            .toDouble() /
+        _microsPerSecond;
 
     final stringBuffer = StringBuffer();
     final sign = isNegative ? '-' : '';
@@ -131,7 +144,9 @@ extension FfmpegDuration on Duration {
     }
     // Fraction
     if (fraction > 0) {
-      stringBuffer.write(fraction.toString().substring(1)); // cut off the leading '0'
+      stringBuffer.write(
+        fraction.toString().substring(1),
+      ); // cut off the leading '0'
     }
     return stringBuffer.toString();
   }
@@ -144,7 +159,8 @@ extension FfmpegDuration on Duration {
     switch (timeUnit) {
       case FfmpegTimeUnit.seconds:
         whole = inSeconds.abs();
-        fraction = (inMicroseconds.abs() - (whole * 1000000)).toDouble() / 1000000;
+        fraction =
+            (inMicroseconds.abs() - (whole * 1000000)).toDouble() / 1000000;
         units = 's';
         break;
       case FfmpegTimeUnit.milliseconds:
@@ -160,22 +176,21 @@ extension FfmpegDuration on Duration {
     }
 
     final fractionString =
-        fraction == 0 ? '' : '+${fraction.toString().substring(1)}'; // Cut the leading '0' off the fraction
+        fraction == 0
+            ? ''
+            : '+${fraction.toString().substring(1)}'; // Cut the leading '0' off the fraction
     return '$sign$whole$fractionString$units';
   }
 
   String toSeconds() {
     final seconds = inSeconds;
-    final fraction = (inMicroseconds - (seconds * _microsPerSecond)) / _microsPerSecond;
+    final fraction =
+        (inMicroseconds - (seconds * _microsPerSecond)) / _microsPerSecond;
     return '${seconds + fraction}';
   }
 }
 
-enum FfmpegTimeUnit {
-  seconds,
-  milliseconds,
-  microseconds,
-}
+enum FfmpegTimeUnit { seconds, milliseconds, microseconds }
 
 class FfmpegTimeBase {
   // TODO:

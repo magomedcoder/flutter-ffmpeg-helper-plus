@@ -1,7 +1,8 @@
-import '../../abstract_classes/ffmpeg_arguments_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_arguments_abstract.dart';
 
 class LogLevelArgument implements CliArguments {
   final LogLevel level;
+
   const LogLevelArgument(this.level);
 
   @override

@@ -1,4 +1,4 @@
-import '../../abstract_classes/ffmpeg_filter_abstract.dart';
+import 'package:ffmpeg_helper_plus/abstract_classes/ffmpeg_filter_abstract.dart';
 
 class RawFilter implements Filter {
   RawFilter(this.cliValue);
