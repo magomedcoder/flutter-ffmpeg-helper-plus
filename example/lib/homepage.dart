@@ -1,11 +1,12 @@
 import 'dart:io';
-import 'package:ffmpeg_helper/ffmpeg_helper.dart';
-import 'package:flutter/material.dart';
+
+import 'package:ffmpeg_helper_plus/ffmpeg_helper_plus.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
+import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,15 +16,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  File selectedFile =
-      File(path.join('assets', 'Drone Footage of High Rises in a City.mp4'));
+  File selectedFile = File(
+    path.join('assets', 'Drone Footage of High Rises in a City.mp4'),
+  );
   bool ffmpegPresent = false;
   ValueNotifier<FFMpegProgress> downloadProgress =
-      ValueNotifier<FFMpegProgress>(FFMpegProgress(
-    downloaded: 0,
-    fileSize: 0,
-    phase: FFMpegProgressPhase.inactive,
-  ));
+      ValueNotifier<FFMpegProgress>(
+        FFMpegProgress(
+          downloaded: 0,
+          fileSize: 0,
+          phase: FFMpegProgressPhase.inactive,
+        ),
+      );
   FFMpegHelper ffmpeg = FFMpegHelper.instance;
 
   Future<void> selectVideoFile() async {
@@ -44,7 +48,8 @@ class _HomePageState extends State<HomePage> {
       print('${res.getBitrate()}');
       for (StreamInformation stream in res.getStreams()) {
         print(
-            "---------\n FFprobe result \n Bitrate: ${stream.getBitrate()} \n Height: ${stream.getHeight()} \n Width: ${stream.getWidth()} \n ------------------");
+          "---------\n FFprobe result \n Bitrate: ${stream.getBitrate()} \n Height: ${stream.getHeight()} \n Width: ${stream.getWidth()} \n ------------------",
+        );
       }
     } else {
       print('ffprobe null');
@@ -75,23 +80,24 @@ class _HomePageState extends State<HomePage> {
     } else if (Platform.isLinux) {
       // show dialog box
       await Dialogs.materialDialog(
-          color: Colors.white,
-          msg:
-              'FFmpeg installation required by user.\nsudo apt-get install ffmpeg\nsudo snap install ffmpeg',
-          title: 'Install FFMpeg',
-          context: context,
-          actions: [
-            IconsButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              text: 'Ok',
-              iconData: Icons.done,
-              color: Colors.blue,
-              textStyle: const TextStyle(color: Colors.white),
-              iconColor: Colors.white,
-            ),
-          ]);
+        color: Colors.white,
+        msg:
+            'FFmpeg installation required by user.\nsudo apt-get install ffmpeg\nsudo snap install ffmpeg',
+        title: 'Install FFMpeg',
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            text: 'Ok',
+            iconData: Icons.done,
+            color: Colors.blue,
+            textStyle: const TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ],
+      );
     }
   }
 
@@ -99,9 +105,7 @@ class _HomePageState extends State<HomePage> {
     if (ffmpegPresent == false) return;
     Directory appDocDir = await getApplicationDocumentsDirectory();
     final FFMpegCommand cliCommand = FFMpegCommand(
-      inputs: [
-        FFMpegInput.asset(selectedFile.path),
-      ],
+      inputs: [FFMpegInput.asset(selectedFile.path)],
       args: [
         const LogLevelArgument(LogLevel.info),
         const OverwriteArgument(),
@@ -114,12 +118,7 @@ class _HomePageState extends State<HomePage> {
         chains: [
           FilterChain(
             inputs: [],
-            filters: [
-              ScaleFilter(
-                height: 300,
-                width: -2,
-              ),
-            ],
+            filters: [ScaleFilter(height: 300, width: -2)],
             outputs: [],
           ),
         ],
@@ -154,11 +153,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: Platform.isWindows
-          ? null
-          : AppBar(
-              title: const Text('FFMpeg Testing'),
-            ),
+      appBar:
+          Platform.isWindows
+              ? null
+              : AppBar(title: const Text('FFMpeg Testing')),
       body: SafeArea(
         child: Center(
           child: Column(
